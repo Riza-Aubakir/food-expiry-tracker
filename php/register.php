@@ -40,20 +40,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="login.php">Кіру</a>
     </nav>
 </header>
-<main>
-    <h2>Тіркелу</h2>
-    <?php if ($message !== ''): ?>
-        <p><?= htmlspecialchars($message) ?></p>
-    <?php endif; ?>
-    <form method="post">
-        <label>Атың</label><br>
-        <input type="text" name="name" required maxlength="100"><br>
-        <label>Email</label><br>
-        <input type="email" name="email" required maxlength="150"><br>
-        <label>Құпиясөз (кемінде 8 таңба)</label><br>
-        <input type="password" name="password" minlength="8" required><br>
-        <button type="submit">Тіркелу</button>
-    </form>
+<main class="auth-page">
+    <section class="auth-card">
+        <div class="auth-icon">🥬</div>
+        <h2>Қош келдіңіз!</h2>
+        <p class="auth-subtitle">Азық-түлік өнімдерінің жарамдылық мерзімін бірге бақылайық.</p>
+        <?php if ($message !== ''): ?>
+            <p class="form-message"><?= htmlspecialchars($message) ?></p>
+        <?php endif; ?>
+        <form method="post">
+            <label for="name">Атыңыз</label>
+            <input id="name" type="text" name="name" placeholder="Атыңызды енгізіңіз" required maxlength="100">
+
+            <label for="email">Email мекенжайы</label>
+            <input id="email" type="email" name="email" placeholder="example@mail.com" required maxlength="150">
+
+            <label for="password">Құпиясөз</label>
+            <input id="password" type="password" name="password" placeholder="Кемінде 8 таңба" minlength="8" required>
+
+            <button type="submit">Аккаунт құру →</button>
+        </form>
+        <p class="auth-footer">Аккаунтыңыз бар ма? <a href="login.php">Жүйеге кіру</a></p>
+    </section>
 </main>
+<script src="../js/script.js"></script>
 </body>
 </html>

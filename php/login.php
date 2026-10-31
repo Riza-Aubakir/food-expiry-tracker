@@ -36,18 +36,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="register.php">Тіркелу</a>
     </nav>
 </header>
-<main>
-    <h2>Жүйеге кіру</h2>
-    <?php if ($message !== ''): ?>
-        <p><?= htmlspecialchars($message) ?></p>
-    <?php endif; ?>
-    <form method="post">
-        <label>Email</label><br>
-        <input type="email" name="email" required><br>
-        <label>Құпиясөз</label><br>
-        <input type="password" name="password" required><br>
-        <button type="submit">Кіру</button>
-    </form>
+<main class="auth-page">
+    <section class="auth-card">
+        <div class="auth-icon">🥬</div>
+
+        <h2>Қайта оралғаныңызға қуаныштымыз!</h2>
+        <p class="auth-subtitle">
+            Өнімдеріңіздің жарамдылық мерзімін бақылау үшін жүйеге кіріңіз.
+        </p>
+        <?php if ($message !== ''): ?>
+            <p class="form-message"><?= htmlspecialchars($message) ?></p>
+        <?php endif; ?>
+        <form method="post">
+            <label for="email">Email мекенжайы</label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="example@mail.com"
+                required
+            >
+            <label for="password">Құпиясөз</label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Құпиясөзіңізді енгізіңіз"
+                required
+            >
+            <button type="submit">Жүйеге кіру →</button>
+        </form>
+        <p class="auth-footer">
+            Аккаунтыңыз жоқ па?
+            <a href="register.php">Тіркелу</a>
+        </p>
+    </section>
 </main>
+<script src="../js/script.js"></script>
 </body>
 </html>

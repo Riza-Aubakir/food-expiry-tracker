@@ -85,68 +85,104 @@ if ($search !== '') {
         <a href="login.php">Кіру</a>
     </nav>
 </header>
-<main>
-    <h2>Жаңа өнім қосу</h2>
-    <?php if ($message !== ''): ?>
-        <p><?= htmlspecialchars($message) ?></p>
-    <?php endif; ?>
-    <form method="post">
-        <input type="hidden" name="action" value="add">
-        <label>Өнім атауы</label><br>
-        <input type="text" name="name" required maxlength="150"><br>
-        <label>Санат</label><br>
-        <select name="category_id">
-            <option value="0">Санат таңдаңыз</option>
-            <?php foreach ($categories as $category): ?>
-                <option value="<?= (int)$category['id'] ?>">
-                    <?= htmlspecialchars($category['name']) ?>
-                </option>
-            <?php endforeach; ?>
-        </select><br>
-        <label>Саны</label><br>
-        <input type="number" name="quantity" min="1" value="1" required><br>
-        <label>Жарамдылық мерзімі</label><br>
-        <input type="date" name="expiry_date" required><br>
-        <button type="submit">Өнімді қосу</button>
-    </form>
-    <hr>
-    <h2>Өнімдер тізімі</h2>
-    <form method="get">
-        <input type="search" name="search"
-               placeholder="Өнім атауын іздеу"
-               value="<?= htmlspecialchars($search) ?>">
-        <button type="submit">Іздеу</button>
-        <a href="products.php">Барлығын көрсету</a>
-    </form>
-    <?php if (!$products): ?>
-        <p>Өнімдер табылмады.</p>
-    <?php else: ?>
-        <?php foreach ($products as $product): ?>
-            <section>
-                <h3><?= htmlspecialchars($product['name']) ?></h3>
-                <p>Санат: <?= htmlspecialchars($product['category_name'] ?? 'Санат жоқ') ?></p>
-                <p>Саны: <?= (int)$product['quantity'] ?></p>
-                <p>Жарамдылық мерзімі: <?= htmlspecialchars($product['expiry_date']) ?></p>
-                <form method="post">
-                    <input type="hidden" name="action" value="edit">
-                    <input type="hidden" name="id" value="<?= (int)$product['id'] ?>">
-                    <input type="text" name="name"
-                           value="<?= htmlspecialchars($product['name']) ?>" required>
-                    <input type="number" name="quantity"
-                           value="<?= (int)$product['quantity'] ?>" min="1" required>
-                    <input type="date" name="expiry_date"
-                           value="<?= htmlspecialchars($product['expiry_date']) ?>" required>
-                    <button type="submit">Өзгерту</button>
-                </form>
-                <form method="post" onsubmit="return confirm('Өнімді өшіресіз бе?');">
-                    <input type="hidden" name="action" value="delete">
-                    <input type="hidden" name="id" value="<?= (int)$product['id'] ?>">
-                    <button type="submit">Өшіру</button>
-                </form>
-            </section>
-            <hr>
-        <?php endforeach; ?>
-    <?php endif; ?>
+<main class="dashboard">
+    <section class="products-section">
+        <div class="section-heading">
+            <h2>＋ Жаңа өнім қосу</h2>
+            <p>Өнім туралы ақпаратты енгізіп, жарамдылық мерзімін бақылаңыз.</p>
+        </div>
+
+        <?php if ($message !== ''): ?>
+            <p class="form-message"><?= htmlspecialchars($message) ?></p>
+        <?php endif; ?>
+
+        <form method="post" class="product-form">
+            <input type="hidden" name="action" value="add">
+
+            <label>Өнім атауы</label>
+            <input type="text" name="name" placeholder="Мысалы, Сүт" required maxlength="150">
+
+            <label>Санат</label>
+            <select name="category_id">
+                <option value="0">Санат таңдаңыз</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= (int)$category['id'] ?>">
+                        <?= htmlspecialchars($category['name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label>Саны</label>
+            <input type="number" name="quantity" min="1" value="1" required>
+
+            <label>Жарамдылық мерзімі</label>
+            <input type="date" name="expiry_date" required>
+
+            <button type="submit">Өнімді қосу →</button>
+        </form>
+    </section>
+    <section class="products-section">
+        <div class="section-heading">
+            <h2>Өнімдер тізімі</h2>
+            <p>Қосылған өнімдерді іздеп, ақпаратын өзгертіңіз.</p>
+        </div>
+        <form method="get" class="search-form">
+            <input type="search" name="search"
+                   placeholder="🔍 Өнім атауын іздеу..."
+                   value="<?= htmlspecialchars($search) ?>">
+            <button type="submit">Іздеу</button>
+            <a href="products.php">Барлығын көрсету</a>
+        </form>
+        <?php if (!$products): ?>
+            <div class="empty-state">
+                <div class="empty-icon">📦</div>
+                <h3>Өнімдер табылмады</h3>
+                <p>Жаңа өнім қосыңыз немесе іздеу сөзін өзгертіңіз.</p>
+            </div>
+        <?php else: ?>
+            <div class="product-grid">
+                <?php foreach ($products as $product): ?>
+                    <article class="product-card">
+                        <div class="product-card-heading">
+                            <span class="product-card-icon">🥗</span>
+                            <div>
+                                <h3><?= htmlspecialchars($product['name']) ?></h3>
+                                <p><?= htmlspecialchars($product['category_name'] ?? 'Санат жоқ') ?></p>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <p><strong>Саны:</strong> <?= (int)$product['quantity'] ?></p>
+                            <p><strong>Жарамдылық мерзімі:</strong> <?= htmlspecialchars($product['expiry_date']) ?></p>
+                        </div>
+                        <form method="post" class="edit-form">
+                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="id" value="<?= (int)$product['id'] ?>">
+
+                            <label>Өнім атауы</label>
+                            <input type="text" name="name"
+                                   value="<?= htmlspecialchars($product['name']) ?>" required>
+
+                            <label>Саны</label>
+                            <input type="number" name="quantity"
+                                   value="<?= (int)$product['quantity'] ?>" min="1" required>
+
+                            <label>Жарамдылық мерзімі</label>
+                            <input type="date" name="expiry_date"
+                                   value="<?= htmlspecialchars($product['expiry_date']) ?>" required>
+
+                            <button type="submit">Өзгерістерді сақтау</button>
+                        </form>
+                        <form method="post" onsubmit="return confirm('Өнімді өшіресіз бе?');">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="id" value="<?= (int)$product['id'] ?>">
+                            <button type="submit" class="delete-button">Өнімді өшіру</button>
+                        </form>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </section>
 </main>
+<script src="../js/script.js"></script>
 </body>
 </html>

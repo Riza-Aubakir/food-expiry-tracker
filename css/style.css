@@ -4,52 +4,168 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     background: #f4f7f2;
     color: #26352b;
+    line-height: 1.6;
 }
 
 header {
-    background: #28784b;
+    background: #216b4b;
     color: white;
-    padding: 20px 8%;
+    padding: 20px 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 23px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin-right: 18px;
+    font-size: 16px;
+    padding: 9px 15px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    background: #39815f;
 }
 
 main {
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 24px;
+    max-width: 1120px;
+    margin: 40px auto;
+    padding: 38px;
     background: white;
-    border-radius: 12px;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(34, 75, 47, 0.07);
 }
 
-h1, h2 {
-    color: #28784b;
+h2 {
+    color: #216b4b;
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 12px;
 }
 
-input, button {
-    padding: 10px;
-    margin: 6px 0;
-    border-radius: 6px;
+p {
+    font-size: 18px;
 }
 
-input {
-    border: 1px solid #ccd5cc;
+main > a {
+    display: inline-block;
+    background: #216b4b;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 8px 0 18px;
+}
+
+main > a:hover {
+    background: #174e36;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th {
+    background: #e8f2e9;
+    color: #245b3f;
+    font-weight: 700;
+}
+
+th, td {
+    padding: 15px 18px;
+    text-align: left;
+    border-bottom: 1px solid #e7ece6;
+}
+
+tr:hover td {
+    background: #f7faf6;
+}
+
+form {
+    max-width: 480px;
+}
+
+label {
+    display: block;
+    margin: 16px 0 6px;
+    font-weight: 600;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d5dfd5;
+    border-radius: 8px;
+    font: inherit;
+    background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #a8d3b5;
+    border-color: #216b4b;
 }
 
 button {
-    background: #28784b;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: #216b4b;
     color: white;
     border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
 }
 
 button:hover {
-    background: #1d5d39;
+    background: #174e36;
+}
+
+@media (max-width: 650px) {
+    header {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+    }
+
+    main {
+        margin: 20px 12px;
+        padding: 22px 16px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }
