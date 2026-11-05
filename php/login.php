@@ -19,23 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="kk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Жүйеге кіру</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-<header>
-    <h1>Азық-түлік бақылау жүйесі</h1>
-    <nav>
-        <a href="index.php">Басты бет</a>
-        <a href="products.php">Өнімдер</a>
-        <a href="register.php">Тіркелу</a>
-    </nav>
-</header>
+<?php include 'header.php'; ?>
 <main class="auth-page">
     <section class="auth-card">
         <div class="auth-icon">🥬</div>
@@ -72,6 +56,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
     </section>
 </main>
-<script src="../js/script.js"></script>
-</body>
-</html>
+<?php include 'footer.php'; ?>

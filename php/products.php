@@ -8,7 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $category_id = (int)($_POST['category_id'] ?? 0);
         $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
         $expiry_date = $_POST['expiry_date'] ?? '';
-        if ($name === '' || !$quantity || $quantity < 1 || $expiry_date === '') {
+        $date = DateTime::createFromFormat('Y-m-d', $expiry_date);
+        $valid_date = $date && $date->format('Y-m-d') === $expiry_date;
+        if ($name === '' || strlen($name) > 150 || !$quantity || $quantity < 1 || !$valid_date) {
             $message = 'Барлық өрісті дұрыс толтырыңыз.';
         } else {
             $stmt = $pdo->prepare(
@@ -26,16 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if ($action === 'delete') {
         $id = (int)($_POST['id'] ?? 0);
-        $stmt = $pdo->prepare('DELETE FROM products WHERE id = ?');
-        $stmt->execute([$id]);
-        $message = 'Өнім өшірілді.';
+        if ($id < 1) {
+            $message = 'Өнім ID нөмірі дұрыс емес.';
+        } else {
+            $stmt = $pdo->prepare('DELETE FROM products WHERE id = ?');
+            $stmt->execute([$id]);
+            $message = 'Өнім өшірілді.';
+        }
     }
     if ($action === 'edit') {
         $id = (int)($_POST['id'] ?? 0);
         $name = trim($_POST['name'] ?? '');
         $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
         $expiry_date = $_POST['expiry_date'] ?? '';
-        if ($id < 1 || $name === '' || !$quantity || $quantity < 1 || $expiry_date === '') {
+        $date = DateTime::createFromFormat('Y-m-d', $expiry_date);
+        $valid_date = $date && $date->format('Y-m-d') === $expiry_date;
+        if ($id < 1 || $name === '' || strlen($name) > 150 || !$quantity || $quantity < 1 || !$valid_date) {
             $message = 'Өнім мәліметтерін дұрыс толтырыңыз.';
         } else {
             $stmt = $pdo->prepare(
@@ -67,24 +75,7 @@ if ($search !== '') {
     )->fetchAll();
 }
 ?>
-<!DOCTYPE html>
-<html lang="kk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Өнімдерді басқару</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-<header>
-    <h1>🥗 Өнімдерді басқару</h1>
-    <nav>
-        <a href="index.php">Басты бет</a>
-        <a href="products.php">Өнімдер</a>
-        <a href="register.php">Тіркелу</a>
-        <a href="login.php">Кіру</a>
-    </nav>
-</header>
+<?php include 'header.php'; ?>
 <main class="dashboard">
     <section class="products-section">
         <div class="section-heading">
@@ -101,7 +92,6 @@ if ($search !== '') {
 
             <label>Өнім атауы</label>
             <input type="text" name="name" placeholder="Мысалы, Сүт" required maxlength="150">
-
             <label>Санат</label>
             <select name="category_id">
                 <option value="0">Санат таңдаңыз</option>
@@ -183,6 +173,4 @@ if ($search !== '') {
         <?php endif; ?>
     </section>
 </main>
-<script src="../js/script.js"></script>
-</body>
-</html>
+<?php include 'footer.php'; ?>

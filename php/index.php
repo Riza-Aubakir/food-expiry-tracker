@@ -1,6 +1,5 @@
 <?php
 require_once 'db.php';
-
 $stmt = $pdo->query("
     SELECT products.*, categories.name AS category_name
     FROM products
@@ -8,28 +7,9 @@ $stmt = $pdo->query("
     ORDER BY products.expiry_date ASC
 ");
 $products = $stmt->fetchAll();
-
 $today = date('Y-m-d');
 ?>
-<!DOCTYPE html>
-<html lang="kk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Азық-түлік мерзімін бақылау</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-<header>
-    <h1>🥗 Азық-түлік бақылау жүйесі</h1>
-    <nav>
-        <a href="index.php">Басты бет</a>
-        <a href="products.php">Өнімдер</a>
-        <a href="register.php">Тіркелу</a>
-        <a href="login.php">Кіру</a>
-        <a href="logout.php">Шығу</a>
-    </nav>
-</header>
+<?php include 'header.php'; ?>
 <main class="dashboard">
     <section class="welcome-banner">
         <div>
@@ -90,5 +70,4 @@ $today = date('Y-m-d');
         <?php endif; ?>
     </section>
 </main>
-</body>
-</html>
+<?php include 'footer.php'; ?>
