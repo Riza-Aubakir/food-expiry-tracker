@@ -15,6 +15,7 @@
             <a href="products.php">Өнімдер</a>
             <a href="login.php">Кіру</a>
             <a href="register.php">Тіркелу</a>
+            <a href="logout.php">Шығу</a>
         </nav>
     </div>
 </header>
